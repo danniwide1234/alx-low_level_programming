@@ -11,11 +11,11 @@ int main(void)
 	char smallLetter = 'a';
 	char bigLetter = 'A';
 
-	while (smallLetter <= z)
+	while (smallLetter <= 'z')
 	{
 		putchar(smallLetter++);
 	}
-	while (bigLetter <= Z)
+	while (bigLetter <= 'Z')
 	{
 		putchar(bigLetter++);
 	}
