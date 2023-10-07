@@ -1,9 +1,9 @@
-#include <stdio>
+#include <stdio.h>
 
 /**
  * main - starting point for the compiler
  *
- * Return - 0 (success)
+ * Return: 0 (success)
  */
 
 int main(void)
