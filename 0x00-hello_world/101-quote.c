@@ -9,8 +9,10 @@
  */
 int main(void)
 {
-	fputs("and that piece of art is useful\" - Dora Korpar, 2015-10-19\n"
-	stdout);
-return (1);
-}
+	const char *quote = "and that piece of art is useful\" - Dora Korpar, 2015-10-19\n";
+	ssize_t len = 59;
 
+	write(STDERR_FILENO, quote, len);
+
+	return (1);
+}
