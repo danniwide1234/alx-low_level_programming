@@ -14,8 +14,10 @@ int main(void)
 
 	while (digit0 <= 7)
 	{
+		digit1 = digit0 + 1;
 		while (digit1 <= 8)
 		{
+			digit2 = digit1 + 1;
 			while (digit2 <= 9)
 			{
 
@@ -23,7 +25,7 @@ int main(void)
 				putchar(digit1 + '0');
 				putchar(digit2 + '0');
 
-				if (digit0 != 7 && digit1 != 8 && digit2 != 9)
+				if (!(digit0 == 7 && digit1 == 8 && digit2 == 9))
 				{
 					putchar(',');
 					putchar(' ');
@@ -32,11 +34,8 @@ int main(void)
 				digit2++;
 			}
 			digit1++;
-			digit2 = digit1 + 1;
 		}
 		digit0++;
-		digit1 = digit0 + 1;
-		digit2 = digit1 + 1;
 	}
 
 	putchar('\n');
