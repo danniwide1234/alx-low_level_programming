@@ -18,9 +18,5 @@ int print_last_digit(int k)
 	}
 	_putchar('0' + last_digit);
 
-	if (last_digit < 10)
-	{
-		_putchar('0' + last_digit);
-	}
 	return (last_digit);
 }
