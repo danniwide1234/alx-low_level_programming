@@ -1,19 +1,29 @@
 #include "main.h"
-#include <stdio.h>
+
 
 /**
  * print_to_98 - Prints all natural numbers from n to 98.
- * @f: The starting number.
+ * @n: The starting number.
  */
 
 
-void print_to_98(int f)
+void print_to_98(int n)
 {
-	int step = (f <= 98) ? 1 : -1;
+	int step = (n <= 98) ? 1 : -1;
+	int comma = 0;
 
-	while (f != 99)
+	while (n != 99)
 	{
-		printf("%d%s", f, (f != 98) ? ", " : "\n");
-		f += step;
+		if (comma)
+			_putchar(',');
+		_putchar(' ');
+		_putchar(n / 10 + '0');
+		_putchar(n % 10 + '0');
+
+		if (n == 98)
+			_putchar('\n');
+
+		n += step;
+		comma = 1;
 	}
 }
