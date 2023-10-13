@@ -7,21 +7,25 @@
 
 void print_to_98(int n)
 {
-	int step = (n <= 98) ? 1 : -1;
-	int comma = 0;
+	int x = (n <= 98) ? 1 : -1;
+	int y = 0;
 
 	while (n != 99)
 	{	
-        	if (comma)
+        	if (y)
+		{
             		_putchar(',');
+		}
 
-        		_putchar(n / 10 + '0');
-        		_putchar(n % 10 + '0');
+        	_putchar(n / 10 + '0');
+        	_putchar(n % 10 + '0');
 		
         	if (n == 98)
+		{
             		_putchar('\n');
+		}
 
-        		n += step;
-        		comma = 1;
+        		n += x;
+        		y = 1;
     }
 }
