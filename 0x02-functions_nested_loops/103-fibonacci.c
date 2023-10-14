@@ -8,13 +8,13 @@
 
 int main(void)
 {
-	int higestValue = 4000000;
+	int limit = 4000000;
 	int x = 1;
 	int y = 2;
 	int after;
 	int add = 2;
 
-	while (after <= highestValue)
+	while (after <= limit)
 	{
 		after = x + y;
 		if (after % 2 == 0)
