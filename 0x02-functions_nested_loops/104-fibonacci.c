@@ -15,7 +15,7 @@ int main(void)
 
 	for (m = 2; m < 98; m++)
 	{
-	next = c + d;
+	after = c + d;
 	printf(", %lu", after);
 
 	c = d;
