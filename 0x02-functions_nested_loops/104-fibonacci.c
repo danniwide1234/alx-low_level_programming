@@ -15,11 +15,11 @@ int main(void)
 
 	for (m = 2; m < 98; m++)
 	{
-	after = c + d;
-	printf(", %lu", after);
+		after = c + d;
+		printf(", %lu", after);
 
-	c = d;
-	d = after;
+		c = d;
+		d = after;
 	}
 
 	printf("\n");
