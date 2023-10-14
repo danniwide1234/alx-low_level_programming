@@ -21,6 +21,6 @@ int main(void)
 		p = q;
 		q = after;
 	}
-	printf("\n")
+	printf("\n");
 	return (0);
 }
