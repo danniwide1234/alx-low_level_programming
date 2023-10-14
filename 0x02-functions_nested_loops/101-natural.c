@@ -2,8 +2,6 @@
 
 /**
  * main - entry point for compilation.
- *
- * Return: (void)
  */
 
 int main(void)
