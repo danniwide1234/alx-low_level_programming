@@ -1,52 +1,27 @@
-#include "main.h"
+#include <stdio.h>
 
 /**
- * print_fibonacci - print fibonnanci nuber.
+ * main - starting point for compilation
  *
- * Return: void
+ * Return: 0 (success)
  */
 
-void print_fibonacci(void)
+int main(void)
 {
-	unsigned long fibo1 = 1, fibo2 = 2, fibo_next;
-	unsigned long divisor;
-	unsigned long temp;
-	int count = 2;
+	int m;
+	unsigned long int c = 1, d = 2, after;
 
-	_putchar('1');
-	_putchar(',');
-	_putchar(' ');
-	_putchar('2');
-	_putchar(',');
-	_putchar(' ');
+	printf("1, 2");
 
-	while (count < 98)
+	for (m = 2; m < 98; m++)
 	{
-		fibo_next = fibo1 + fibo2;
-		divisor = 1;
-		temp = fibo_next;
+	next = c + d;
+	printf(", %lu", after);
 
-		while (divisor <= temp / 10)
-		{
-			divisor *= 10;
-		}
-
-		while (divisor > 0)
-		{
-			_putchar((temp / divisor) + '0');
-			temp %= divisor;
-			divisor /= 10;
-		}
-
-		if (count < 97)
-		{
-			_putchar(',');
-			_putchar(' ');
-		}
-		fibo1 = fibo2;
-		fibo2 = fibo_next;
-
-		count++;
+	c = d;
+	d = after;
 	}
-	_putchar('\n');
+
+	printf("\n");
+	return (0);
 }
