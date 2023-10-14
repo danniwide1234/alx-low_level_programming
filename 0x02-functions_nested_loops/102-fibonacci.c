@@ -13,15 +13,13 @@ int main(void)
 	unsigned long int after;
 	int z;
 
-	printf("%lu, ", p);
-	for (z = 1; z < 50; z++)
+	printf("%lu, %lu", p, q);
+	for (z = 2; z < 50; z++)
 	{
-		printf("%lu, ", q);
 		after = p + q;
+		printf(", %lu", after);
 		p = q;
 		q = after;
-		if (z != 49)
-			printf(", ");
 	}
 	printf("\n")
 	return (0);
