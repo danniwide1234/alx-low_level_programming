@@ -12,7 +12,7 @@ int main(void)
 	unsigned long fibo1 = 0, fibo2 = 1, add;
 	unsigned long fibo1_less1, fibo2_less1, fibo1_less2, fibo2_less2;
 
-	for (number = 0; number < 92; number++)
+	for (number = 0; number < 98; number++)
 	{
 		add = fibo1 + fibo2;
 		printf("%lu, ", add);
