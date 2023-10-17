@@ -29,25 +29,27 @@ int main(void)
 	
 	if (add !=2772)
 	{
-		a = (2772 - add) / 2;
-		b = (2772 - add) / 2;
-
-		if ((2772 - add) % 2 != 0)
-			a++;
+		a = 2772 - add;
+		b = a;
 		
 		for (y = 0; password[y]; y++)
 		{
-			if (password[y] >= (33 + b))
+			if (password[y] >= 33 && password[y] <= 126)
 			{
-				break;
+				int diff = 126 - password[y];
+				if (diff < b)
+				{
+					password[y] = 126;
+					b -= diff;
+					
+				}
+				else
+				{
+					password[y] += b;
+					break;
+				}
 			}
 		}
-	
-	}
-	
-	if (password[y] == 0)
-	{
-		password[y] = 33 + b;
 	}
 	
 	printf("%s\n", password);
