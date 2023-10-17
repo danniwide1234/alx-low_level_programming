@@ -12,7 +12,7 @@
 
 int main(void)
 {
-	char password[84];
+	char password[85];
 	int y = 0;
 	int add = 0;
 	int a;
@@ -29,10 +29,10 @@ int main(void)
 	
 	if (add !=2772)
 	{
-		a = (add -2772) / 2;
-		b = (add -2772) / 2;
+		a = (2772 - add) / 2;
+		b = (2772 - add) / 2;
 
-		if ((add - 2772) % 2 != 0)
+		if ((2772 - add) % 2 != 0)
 			a++;
 		
 		for (y = 0; password[y]; y++)
@@ -42,7 +42,14 @@ int main(void)
 				break;
 			}
 		}
+	
 	}
-	printf("%s", password);
+	
+	if (password[y] == 0)
+	{
+		password[y] = 33 + b;
+	}
+	
+	printf("%s\n", password);
 	return (0);
 }	
