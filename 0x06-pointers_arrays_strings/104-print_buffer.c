@@ -33,7 +33,7 @@ void print_buffer(char *b, int size)
 				printf("  ");
 			if (k % 2)
 			{
-				printf(" ");
+				printf("  ");
 			}
 		}
 		for (k = 0; k < f; k++)
