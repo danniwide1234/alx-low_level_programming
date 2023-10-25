@@ -6,7 +6,6 @@ int check_prime(int n, int k);
 /**
  * is_prime_number - function that returns 1 if the input integer
  * is a prime number, otherwise return 0
- * 
  * @n: the number to be worked upon
  *
  * Return: value of integer
@@ -18,8 +17,7 @@ int is_prime_number(int n)
 }
 
 /**
- * is_prime_number - to check if the number is a prime
- * 
+ * check_prime - to check if the number is a prime
  * @n: number to be work upon
  *@k: item to be iterated
 *
