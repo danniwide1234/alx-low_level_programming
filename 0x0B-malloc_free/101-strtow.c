@@ -1,151 +1,117 @@
 #include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 /**
- * is_space - Checks if a character is a whitespace character.
+ * ch_free_grid - entry point
  *
- * @c: The character to check.
- *
- * Return: 1 if it's a whitespace character, 0 otherwise.
+ * @grid: value of input
+ * @length: input value
  */
-int is_space(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n');
-}
 
-/**
- * letter_lend - Calculate the length of a word within a string.
- *
- * @str: The string to work on.
- *
- * Return: The length of the word.
- */
-int letter_lend(char *str)
+void ch_free_grid(char **grid, size_t length)
 {
-	int indices = 0, lend = 0;
+	size_t i;
 
-	while (*(str + indices) && !is_space(*(str + indices)))
+	if (grid != NULL && length != 0)
 	{
-		lend++;
-		indices++;
+		for (i = 0; i < length; i++)
+		{
+			free(grid[i]);
+		}
+		free(grid[i]);
 	}
+}
 
-	return (lend);
+
+/**
+ * allocate_words - Allocates memory for an
+ * array of words based on word counts.
+ *
+ * @count: The number of words to allocate memory for.
+ *
+ * Return: An array of strings or NULL on failure.
+ */
+char **allocate_words(size_t count)
+{
+	char **words = (char **)malloc((count + 1) * sizeof(char *));
+
+	if (words == NULL)
+	{
+		return (NULL);
+	}
+	return (words);
 }
 
 /**
- * add_words_to_array - Add words to the string array.
+ * split_words - Splits a string into words.
  *
- * @s: The string array to add words to.
- * @str: The source string to split into words.
+ * @str: The input string to be split.
+ * @words: The array to store the split words.
  *
- * Return: The number of words added to the array.
+ * Return: The number of words found.
  */
-int add_words_to_array(char **s, char *str);
+size_t split_words(char *str, char **words)
+{
+	size_t word_count = 0;
+	size_t char_count = 0;
+	size_t j;
+	size_t i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+		{
+			words[word_count] = (char *)malloc((char_count + 2) * sizeof(char));
+			if (words[word_count] == NULL)
+			{
+				ch_free_grid(words, word_count);
+				return (0);
+			}
+
+			for (j = 0; j <= char_count; j++)
+			{
+				words[word_count][j] = str[i - char_count + j];
+			}
+			words[word_count][j] = '\0';
+
+			word_count++;
+			char_count = 0;
+		}
+		else if (str[i] != ' ')
+		{
+			char_count++;
+		}
+	}
+	return (word_count);
+}
 
 /**
- * strtow - Split a string into words.
+ * strtow - Splits a string into words.
  *
- * @str: The string to work on.
+ * @str: The input string to be split.
  *
- * Return: An array of words.
+ * Return: A grid of words (strings) or NULL on failure.
  */
 char **strtow(char *str)
 {
-	char **s = NULL;
-	int letter, i, word_count;
+	char **words;
+	size_t word_count;
 
-	if (str == NULL || str[0] == '\0')
+	if (str == NULL || *str == '\0')
+	{
+		return (NULL);
+
+	}
+	words = NULL;
+	word_count = split_words(str, words);
+
+	if (word_count == 0)
 	{
 		return (NULL);
 	}
 
-	letter = add_words_to_array(s, str);
-
-	if (letter == 0)
-	{
-		return (NULL);
-	}
-
-	s = malloc(sizeof(char *) * (letter + 1));
-
-	if (s == NULL)
-	{
-		return (NULL);
-	}
-
-	word_count = add_words_to_array(s, str);
-
-	if (word_count < 0)
-	{
-		for (i = 0; i < letter; i++)
-		{
-			free(s[i]);
-		}
-		free(s);
-		return (NULL);
-	}
-
-	s[word_count] = NULL;
-	return (s);
-}
-
-/**
- * add_words_to_array - Add words to the string array.
- *
- * @s: The string array to add words to.
- * @str: The source string to split into words.
- *
- * Return: The number of words added to the array.
- */
-int add_words_to_array(char **s, char *str)
-{
-	int i = 0, k, word_count = 0;
-
-	if (s == NULL || str == NULL)
-	{
-		return (-1);
-	}
-	
-	while (str[i] != '\0')
-	{
-		if (!is_space(str[i]))
-		{
-			int j = i;
-
-			while (str[j] != '\0' && !is_space(str[j]))
-			{
-				j++;
-			}
-
-			s[word_count] = malloc(sizeof(char) * (j - i + 1));
-
-			if (s[word_count] == NULL)
-			{
-				for (k = 0; k < word_count; k++)
-				{
-					free(s[k]);
-				}
-				return (-1);
-			}
-
-			for (k = 0; k < j - i; k++)
-			{
-				s[word_count][k] = str[i + k];
-			}
-
-			s[word_count][j - i] = '\0';
-
-			i = j;
-			word_count++;
-		}
-		else
-		{
-			i++;
-		}
-	}
-
-	return (word_count);
+	words[word_count] = NULL;
+	return (words);
 }
