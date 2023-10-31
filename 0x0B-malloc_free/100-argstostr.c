@@ -42,7 +42,7 @@ char *argstostr(int ac, char **av)
 		{
 			k[h] = av[f][g];
 		}
-		k[h] = ' ';
+		k[h] = '\n';
 		h++;
 	}
 
