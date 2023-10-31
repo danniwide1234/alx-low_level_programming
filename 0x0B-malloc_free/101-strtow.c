@@ -12,13 +12,14 @@
 
 void ch_free_grid(char **grid, size_t length)
 {
-	size_t i;
-
-	if (grid != NULL && length != 0)
+	if (grid != NULL)
 	{
-		for (i = 0; i < length; i++)
+		size_t i = 0;
+
+		while (i < length)
 		{
 			free(grid[i]);
+			i++;
 		}
 		free(grid[i]);
 	}
@@ -36,10 +37,16 @@ void ch_free_grid(char **grid, size_t length)
 char **allocate_words(size_t count)
 {
 	char **words = (char **)malloc((count + 1) * sizeof(char *));
+	size_t i = 0;
 
 	if (words == NULL)
 	{
 		return (NULL);
+	}
+	while (i <= count)
+	{
+		words[i] = NULL;
+		i++;
 	}
 	return (words);
 }
@@ -57,9 +64,9 @@ size_t split_words(char *str, char **words)
 	size_t word_count = 0;
 	size_t char_count = 0;
 	size_t j;
-	size_t i;
+	size_t i = 0;
 
-	for (i = 0; str[i] != '\0'; i++)
+	for (; str[i] != '\0'; i++)
 	{
 		if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
 		{
