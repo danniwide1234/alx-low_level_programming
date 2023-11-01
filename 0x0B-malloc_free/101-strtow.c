@@ -1,7 +1,7 @@
-#include "main.h"
-#include <stdlib.h>
+
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 /**
  * ch_free_grid - entry point
@@ -21,7 +21,7 @@ void ch_free_grid(char **grid, size_t length)
 			free(grid[i]);
 			i++;
 		}
-		free(grid[i]);
+		free(grid);
 	}
 }
 
@@ -54,7 +54,7 @@ char **allocate_words(size_t count)
 /**
  * split_words - Splits a string into words.
  *
- * @str: The input string to be split.
+i * @str: The input string to be split.
  * @words: The array to store the split words.
  *
  * Return: The number of words found.
@@ -65,11 +65,13 @@ size_t split_words(char *str, char **words)
 	size_t char_count = 0;
 	size_t j;
 	size_t i = 0;
+	int is_inside_word = 0;
 
 	for (; str[i] != '\0'; i++)
 	{
-		if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+		if (str[i] != ' ' && !is_inside_word)
 		{
+			is_inside_word = 1;
 			words[word_count] = (char *)malloc((char_count + 2) * sizeof(char));
 			if (words[word_count] == NULL)
 			{
@@ -77,7 +79,7 @@ size_t split_words(char *str, char **words)
 				return (0);
 			}
 
-			for (j = 0; j <= char_count; j++)
+			for (j = 0; j < char_count; j++)
 			{
 				words[word_count][j] = str[i - char_count + j];
 			}
@@ -88,7 +90,7 @@ size_t split_words(char *str, char **words)
 		}
 		else if (str[i] != ' ')
 		{
-			char_count++;
+			is_inside_word = 0;
 		}
 	}
 	return (word_count);
@@ -103,22 +105,26 @@ size_t split_words(char *str, char **words)
  */
 char **strtow(char *str)
 {
-	char **words;
 	size_t word_count;
+	char **words;
 
 	if (str == NULL || *str == '\0')
 	{
 		return (NULL);
 
 	}
-	words = NULL;
-	word_count = split_words(str, words);
+	word_count = split_words(str, NULL);
 
 	if (word_count == 0)
 	{
 		return (NULL);
 	}
+	words = allocate_words(word_count);
+	if (words == NULL)
+	{
+		return (NULL);
+	}
 
-	words[word_count] = NULL;
+	split_words(str, words);
 	return (words);
 }
