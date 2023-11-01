@@ -4,10 +4,10 @@
 #include <stdlib.h>
 
 /**
- * ch_free_grid - entry point
+ * ch_free_grid - Frees a 2D array of strings.
  *
- * @grid: value of input
- * @length: input value
+ * @grid: The array to free
+ * @length: The number of elements in the array.
  */
 
 void ch_free_grid(char **grid, size_t length)
@@ -96,7 +96,7 @@ size_t split_words(char *str, char **words)
 		{
 			char_count++;
 		}
-		i++;
+		
 	}
 	if (is_inside_word)
 	{
