@@ -92,6 +92,27 @@ size_t split_words(char *str, char **words)
 		{
 			is_inside_word = 0;
 		}
+		else
+		{
+			char_count++;
+		}
+		i++;
+	}
+	if (is_inside_word)
+	{
+		words[word_count] = (char *)malloc((char_count + 2) * sizeof(char));
+		if (words[word_count] == NULL)
+		{
+			ch_free_grid(words, word_count);
+			return (0);
+		}
+	
+		for (j = 0; j < char_count; j++)
+		{
+			words[word_count][j] = str[i - char_count + j - 1];
+		}
+		words[word_count][j] = '\0';
+		word_count++;
 	}
 	return (word_count);
 }
