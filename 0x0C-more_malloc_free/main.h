@@ -10,5 +10,6 @@ unsigned int string_length(char *s);
 unsigned int calculate_concat_length(unsigned int len_s1, unsigned int len_s2, unsigned int n);
 char *allocate_memory(unsigned int len);
 void copy_string(char *dest, char *src, unsigned int n);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 #endif
