@@ -1,6 +1,13 @@
 #include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
+
+/**
+ * Function declarations
+ */
+
+unsigned int calculate_string_length(char *s);
+void copy_string_characters(char *dest, char *src);
+
 
 /**
  * string_nconcat - function that concatenates two strings
@@ -14,52 +21,82 @@
 
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	unsigned int a = 0, b = 0, c = 0, d = 0;
-	char *len;
+  /* Declarations and initializations. */
+	unsigned int len;
+	char *result;
 
-	if (s1 == NULL)
+  /* Calculate the length of the resulting string. */
+	len = calculate_string_length(s1) + calculate_string_length(s2);
+	if (n < calculate_string_length(s2))
 	{
-		s1 = "";
+		len -= calculate_string_length(s2) - n;
 	}
-	if (s2 == NULL)
-	{
-		s2 = "";
-	}
-	while (s1[a])
-	{
-		a++;
-	}
-	while (s2[c])
-	{
-		c++;
-	}
-	if (n >= c)
-	{
-		d = a + c;
-	}
-	else
-	{
-		d = a + n;
-	}
-	len = malloc(sizeof(char) * d + 1);
-	if (len == NULL)
+
+  /* Allocate memory for the resulting string. */
+	result = malloc(sizeof(char) * len + 1);
+	if (result == NULL)
 	{
 		return (NULL);
 	}
-	c = 0;
-	while (b < d)
+
+  /* Copy the characters from the two input strings to the resulting string. */
+	copy_string_characters(result, s1);
+	copy_string_characters(result + calculate_string_length(s1), s2);
+
+  /* Add a null terminator to the end of the resulting string. */
+	result[len] = '\0';
+
+  /* Return the resulting string. */
+	return (result);
+}
+
+
+/**
+ * calculate_string_length - function that calculates the length of a string
+ *
+ * @s: string
+ *
+ * Return: The length of the string
+ */
+unsigned int calculate_string_length(char *s)
+{
+  /* Declarations and initializations. */
+	unsigned int len;
+
+  /* Calculate the length of the string. */
+	len = 0;
+	while (s[len])
 	{
-		if (b <= a)
-		{
-			len[b] = s1[b];
-		}
-		if (b >= a)
-		{
-			len[b] = s2[c];
-			c++;
-		}
-		b++;
+		len++;
 	}
-	len[b] = '\0';
+
+  /* Return the length of the string. */
 	return (len);
+}
+
+/**
+ * copy_string_characters - function that copies characters
+ * from one string to another
+ *
+ * @dest: destination string
+ * @src: source string
+ *
+ * Return: None
+ */
+
+void copy_string_characters(char *dest, char *src)
+{
+  /* Declarations and initializations. */
+	unsigned int i;
+
+  /* Copy the characters from the source string to the destination string. */
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+
+  /* Add a null terminator to the end of the destination string. */
+	dest[i] = '\0';
 }
