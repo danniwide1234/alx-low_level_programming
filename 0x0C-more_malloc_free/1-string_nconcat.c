@@ -2,101 +2,106 @@
 #include <stdlib.h>
 
 /**
- * Function declarations
- */
-
-unsigned int calculate_string_length(char *s);
-void copy_string_characters(char *dest, char *src);
-
-
-/**
  * string_nconcat - function that concatenates two strings
  *
  * @s1: first string
  * @s2: second string
- * @n: number of iteration
+ * @n: number of characters from s2 to concatenate
  *
- * Return: The resulting value
+ * Return: The resulting concatenated string or NULL on failure
  */
-
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-  /* Declarations and initializations. */
-	unsigned int len;
+	unsigned int len_s1, len_s2, concat_len;
 	char *result;
 
-  /* Calculate the length of the resulting string. */
-	len = calculate_string_length(s1) + calculate_string_length(s2);
-	if (n < calculate_string_length(s2))
-	{
-		len -= calculate_string_length(s2) - n;
-	}
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
 
-  /* Allocate memory for the resulting string. */
-	result = malloc(sizeof(char) * len + 1);
+	len_s1 = string_length(s1);
+	len_s2 = string_length(s2);
+
+	concat_len = calculate_concat_length(len_s1, len_s2, n);
+
+	result = allocate_memory(concat_len);
 	if (result == NULL)
 	{
 		return (NULL);
 	}
 
-  /* Copy the characters from the two input strings to the resulting string. */
-	copy_string_characters(result, s1);
-	copy_string_characters(result + calculate_string_length(s1), s2);
+	copy_string(result, s1, len_s1);
+	copy_string(result + len_s1, s2, n);
 
-  /* Add a null terminator to the end of the resulting string. */
-	result[len] = '\0';
+	result[concat_len] = '\0';
 
-  /* Return the resulting string. */
 	return (result);
 }
 
-
 /**
- * calculate_string_length - function that calculates the length of a string
+ * string_length - calculates the length of a string
  *
- * @s: string
- *
- * Return: The length of the string
+ * @s: input string
+ * Return: length of the string
  */
-unsigned int calculate_string_length(char *s)
+unsigned int string_length(char *s)
 {
-  /* Declarations and initializations. */
-	unsigned int len;
+	unsigned int len = 0;
 
-  /* Calculate the length of the string. */
-	len = 0;
 	while (s[len])
 	{
 		len++;
 	}
 
-  /* Return the length of the string. */
 	return (len);
 }
 
 /**
- * copy_string_characters - function that copies characters
- * from one string to another
+ * calculate_concat_length - calculates the
+ * length of concatenated string
+ *
+ * @len_s1: length of first string
+ * @len_s2: length of second string
+ * @n: number of characters to concatenate from s2
+ * Return: length of concatenated string
+ */
+unsigned int calculate_concat_length(unsigned int len_s1,
+					unsigned int len_s2,
+					unsigned int n)
+{
+	if (n >= len_s2)
+		return (len_s1 + len_s2);
+	else
+		return (len_s1 + n);
+}
+
+/**
+ * allocate_memory - allocates memory for a string
+ *
+ * @len: length of the string
+ * Return: pointer to the allocated memory
+ */
+char *allocate_memory(unsigned int len)
+{
+	char *ptr = malloc(sizeof(char) * (len + 1));
+
+	return (ptr);
+}
+
+/**
+ * copy_string - copies characters from source to destination
  *
  * @dest: destination string
  * @src: source string
- *
- * Return: None
+ * @n: number of characters to copy from source
  */
-
-void copy_string_characters(char *dest, char *src)
+void copy_string(char *dest, char *src, unsigned int n)
 {
-  /* Declarations and initializations. */
 	unsigned int i;
 
-  /* Copy the characters from the source string to the destination string. */
-	i = 0;
-	while (src[i])
+	for (i = 0; i < n && src[i]; i++)
 	{
 		dest[i] = src[i];
-		i++;
 	}
-
-  /* Add a null terminator to the end of the destination string. */
-	dest[i] = '\0';
 }
