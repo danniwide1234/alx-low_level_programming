@@ -11,5 +11,10 @@ unsigned int calculate_concat_length(unsigned int len_s1, unsigned int len_s2, u
 char *allocate_memory(unsigned int len);
 void copy_string(char *dest, char *src, unsigned int n);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+int seen_length(char *str);
+int int_length(int n);
+int times(int a, int b);
+char *add_leading_zeros(char *str, int n)
+int main(int argc, char *argv[])
 
 #endif
