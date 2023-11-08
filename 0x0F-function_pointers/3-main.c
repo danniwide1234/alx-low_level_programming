@@ -12,12 +12,12 @@
  * Return: 0 (success)
  */
 
-int main(int __attribute__((__used__)) argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	int num1, num2;
 	char *op;
 
-	if (argc != 0)
+	if (argc != 4)
 	{
 		printf("Error\n");
 		exit(98);
