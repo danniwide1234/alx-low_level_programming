@@ -1,14 +1,14 @@
 section .data
-    hello_message db "Hello, Holberton", 0
+	hello_message db "Hello, Holberton", 0
 
 section .text
-    global main
+	global main
 
-    extern printf
+	extern printf
 
 main:
-    push rbp                  ; Save the base pointer
-    mov rdi, hello_message    ; Set the format string
-    call printf               ; Call printf
-    pop rbp                   ; Restore the base pointer
-    ret
+	push rbp                  ; Save the base pointer
+	mov rdi, hello_message    ; Set the format string
+	call printf               ; Call printf
+	pop rbp                   ; Restore the base pointer
+	ret
