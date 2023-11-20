@@ -28,11 +28,8 @@ listint_t *add_nodeint(listint_t **head, const int n)
 	{
 		latest_node->next = NULL;
 	}
-	else
-	{
-		latest_node->next = *head;
-	}
 	latest_node->n = n;
+	latest_node->next = *head;
 	*head = latest_node;
-	return (0);
+	return (*head);
 }
