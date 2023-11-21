@@ -1,22 +1,18 @@
 #include "lists.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /**
- * free_listd - Frees a linked list
+ * free_listp - Frees a linked list
  * @head: Pointer to the head of a list
  *
  * Return: void
  */
-void free_listd(listd_t **head)
+void free_listp(listp_t **head)
 {
-	listd_t *storage;
-	listd_t *now;
+	listp_t *storage;
+	listp_t *now;
 
-	if (head == NULL || *head == NULL)
-		return;
-
-	now = *head;
+	if (head != NULL)
+		now = *head;
 	while ((storage = now) != NULL)
 	{
 		now = now->next;
@@ -43,10 +39,9 @@ size_t print_listint_safe(const listint_t *head)
 		latest = malloc(sizeof(listp_t));
 		if (latest == NULL)
 		{
-			free_listd((listd_t **)&zptr);
+			free_listint(&zptr);
 			exit(98);
 		}
-
 		latest->p = (void *)head;
 		latest->next = zptr;
 		zptr = latest;
@@ -55,18 +50,16 @@ size_t print_listint_safe(const listint_t *head)
 		while (sum->next != NULL)
 			sum = sum->next;
 
-		if (head == sum->p)
-		{
+			if (head == sum->p)
+			{
+				printf("-> [p] %p\n", (void *)head);
+				free_listint(&zptr);
+				return (nnodes);
+			}
 			printf("-> [p] %p\n", (void *)head);
-			free_listd((listd_t **)&zptr);
-			return (nnodes);
-		}
-
-		printf("-> [p] %p\n", (void *)head);
-		head = head->next;
-		nnodes++;
+			head = head->next;
+			nnodes++;
 	}
-
-	free_listd((listd_t **)&zptr);
+	free_listint(&zptr);
 	return (nnodes);
 }

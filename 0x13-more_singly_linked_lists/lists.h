@@ -18,12 +18,15 @@ typedef struct listint_s
 	struct listint_s *next;
 } listint_t;
 
-typedef struct listd_s
-{
-    struct listd_s *next;
-} listd_t;
 
-/* Define your listp_t structure here */
+/**
+ * struct listp_s - linked list singularly
+ * @p: node pointer
+ * @next: next node pointer
+ *
+ * Description: singly list pointer
+ */
+
 typedef struct listp_s
 {
     void *p;
@@ -47,6 +50,5 @@ listint_t *reverse_listint(listint_t **head);
 size_t print_listint_safe(const listint_t *head);
 size_t free_listint_safe(listint_t **h);
 listint_t *find_listint_loop(listint_t *head);
-void free_listd(listd_t **head);
 
 #endif /* _LISTS_H_ */
