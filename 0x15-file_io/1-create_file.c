@@ -31,7 +31,7 @@ int create_file(const char *filename, char *text_content)
 		;
 	}
 	command = write(file_a, text_content, alphabet);
-	if (command == -1)
+	if (command == -1 || command != alphabet)
 	{
 		close(file_a);
 		return (-1);
