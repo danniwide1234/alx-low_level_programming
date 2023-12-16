@@ -1,65 +1,37 @@
 #include "lists.h"
 
 /**
- * free_listp - Frees a linked list
- * @head: Pointer to the head of a list
- *
- * Return: void
- */
-void free_listp(listp_t **head)
-{
-	listp_t *storage;
-	listp_t *now;
-
-	if (head != NULL)
-		now = *head;
-	while ((storage = now) != NULL)
-	{
-		now = now->next;
-		free(storage);
-	}
-
-	*head = NULL;
-}
-
-/**
- * print_listint_safe - Prints a listint_t linked list
- * @head: Pointer to a list
- *
- * Return: Number of nodes in the list
+ * print_listint_safe - function that prints a linked list with a loop safely.
+ * @head: first node of the linked list being pointed to
+ * Return: fresh_node
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	size_t nnodes = 0;
-	listp_t *zptr, *latest, *sum;
+	const listint_t *m = NULL;
+	const listint_t *n = NULL;
+	size_t number = 0;
+	size_t fresh;
 
-	zptr = NULL;
-	while (head != NULL)
+	m = head;
+	while (n)
 	{
-		latest = malloc(sizeof(listp_t));
-		if (latest == NULL)
+		printf("[%p] %d\n", (void *)m, m->n);
+		number++;
+		m = m->next;
+		n = head;
+		fresh = 0;
+		while (fresh < number)
 		{
-			free_listint(&zptr);
-			exit(98);
-		}
-		latest->p = (void *)head;
-		latest->next = zptr;
-		zptr = latest;
-
-		sum = zptr;
-		while (sum->next != NULL)
-			sum = sum->next;
-
-			if (head == sum->p)
+			if (m == n)
 			{
-				printf("-> [p] %p\n", (void *)head);
-				free_listint(&zptr);
-				return (nnodes);
+				printf("-> [%p] %d\n", (void *)m, m->n);
+				return (number);
 			}
-			printf("-> [p] %p\n", (void *)head);
-			head = head->next;
-			nnodes++;
+			n = n->next;
+			fresh++;
+		}
+		if (!head)
+			exit(98);
 	}
-	free_listint(&zptr);
-	return (nnodes);
+	return (number);
 }
