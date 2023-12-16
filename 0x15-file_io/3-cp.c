@@ -1,85 +1,104 @@
-#include <fcntl.h>
-#include <stdlib.h>
+#include "main.h"
 #include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#include <stdlib.h>
 
-void look_IO_stat(int stat, int fd, char *filename, char state);
+char *establish_buffer(char *file);
+void extinct_file(int fd);
 
 /**
- * main - function that duplicates content of
- * one file to another
+ * establish_buffer - buffer allocated 1024 bytes.
+ * @file: file name of  buffer use in storing chars for.
  *
- * @argc: argument count
- * @argv: argument vector
- *
- * Return: (success) denote 1
+ * Return: newly-allocated buffer pointer
  */
-int main(int argc, char *argv[])
+char *establish_buffer(char *file)
 {
-	int fd, dest, n_read = 1024, wrote, close_fd, close_dest;
-	unsigned int state = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
-	char buffer[1024];
+	char *buffer;
 
-	if (argc != 3)
+	buffer = malloc(sizeof(char) * 1024);
+
+	if (buffer == NULL)
 	{
-		dprintf(STDERR_FILENO, "Usage: cp_file_from_file\n");
-		exit(97);
+		dprintf(STDERR_FILENO,
+			"Error: Can't write to %s\n", file);
+		exit(99);
 	}
 
-	fd = open(argv[1], O_RDONLY);
-	look_IO_stat(fd, -1, argv[1], 'O');
-
-	dest = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, state);
-	look_IO_stat(dest, -1, argv[2], 'W');
-
-	while (n_read == 1024)
-	{
-		n_read = read(fd, buffer, sizeof(buffer));
-		if (n_read == -1)
-			look_IO_stat(-1, -1, argv[1], 'O');
-
-		wrote = write(dest, buffer, n_read);
-		if (wrote == -1)
-			look_IO_stat(-1, -1, argv[2], 'W');
-	}
-
-	close_fd = close(fd);
-	look_IO_stat(close_fd, fd, NULL, 'C');
-
-	close_dest = close(dest);
-	look_IO_stat(close_dest, dest, NULL, 'C');
-
-	return (0);
+	return (buffer);
 }
 
 /**
- * look_IO_stat - function that checks if a file can be
- * closed or opened
- *
- * @stat: file descriptor for open
- * @filename: name of file
- * @state: opening or closing
- * @fd: file descriptor
- *
- * Return: (void)
+ * extinct_file - file descriptors that is closed
+ * @fd: file descriptor to be closed.
  */
-void look_IO_stat(int stat, int fd, char *filename, char state)
+void extinct_file(int fd)
 {
-	if (state == 'C' && stat == -1)
+	int k;
+
+	k = close(fd);
+
+	if (k == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: can't close fd %d\n", fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
 		exit(100);
 	}
-	else if (state == 'O' && stat == -1)
+}
+
+/**
+ * main - function that Copies the
+ * contents of a file to another file.
+ * @argc: The number of arguments.
+ * @argv: array of pointers to the arguments.
+ *
+ * Return: 0 on success.
+ *
+ * Description: If the argument count is incorrect - exit code 97.
+ *              If file_from does not exist or cannot be read - exit code 98.
+ *              If file_to cannot be created or written to - exit code 99.
+ *              If file_to or file_from cannot be closed - exit code 100.
+ */
+int main(int argc, char *argv[])
+{
+	int from, to, a, b;
+	char *buffer;
+
+	if (argc != 3)
 	{
-		dprintf(STDERR_FILENO, "Error: can't read from file %s\n", filename);
-		exit(98);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
 	}
-	else if (state == 'W' && stat == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: can't write to %s\n", filename);
-		exit(99);
-	}
+
+	buffer = establish_buffer(argv[2]);
+	from = open(argv[1], O_RDONLY);
+	a = read(from, buffer, 1024);
+	to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+
+	do {
+		if (from == -1 || a == -1)
+		{
+			dprintf(STDERR_FILENO,
+				"Error: Can't read from file %s\n", argv[1]);
+			free(buffer);
+			exit(98);
+		}
+
+		b = write(to, buffer, a);
+		if (to == -1 || b == -1)
+		{
+			dprintf(STDERR_FILENO,
+				"Error: Can't write to %s\n", argv[2]);
+			free(buffer);
+			exit(99);
+		}
+
+		a = read(from, buffer, 1024);
+		to = open(argv[2], O_WRONLY | O_APPEND);
+
+	} while (a > 0);
+
+	free(buffer);
+	extinct_file(from);
+	extinct_file(to);
+
+	return (0);
 }
