@@ -1,41 +1,51 @@
 #include "search_algos.h"
 
 /**
-  * interpolation_search - Search for a value in a sorted array
-  *                        of integers using interpolation search.
-  * @array: A pointer to the first element of the array to search.
-  * @size: The number of elements in the array.
-  * @value: The value to search for.
-  *
-  * Return: If the value is not present or the array is NULL, -1.
-  *         else, the first index where the value is located.
-  *
-  * Description: Print a value every time it is compared in the array..
-  */
+ * interpolation_search - searches for a value in an array of
+ * integers using the Interpolation search algorithm
+ *
+ * @array: array input
+ * @size: size of the array
+ * @value: value to search in
+ * Return: index of the number
+ */
 int interpolation_search(int *array, size_t size, int value)
 {
-	size_t b, h, p;
+	size_t pos, low, high;
+	double r;
 
 	if (array == NULL)
 		return (-1);
 
-	for (h = 0, p = size - 1; p >= h;)
+	low = 0;
+	high = size - 1;
+
+	while (size)
 	{
-		b = h + (((double)(p - l) / (array[p] - array[h])) * (value - array[h]));
-		if (b < size)
-			printf("Value checked array[%ld] = [%d]\n", b, array[b]);
-		else
+		r = (double)(high - low) / (array[high] - array[low]) * (value - array[low]);
+		pos = (size_t)(low + r);
+		printf("Value checked array[%d]", (int)pos);
+
+		if (pos >= size)
 		{
-			printf("Value checked array[%ld] is out of range\n", b);
+			printf(" is out of range\n");
 			break;
 		}
-
-		if (array[b] == value)
-			return (b);
-		if (array[b] > value)
-			p = b - 1;
 		else
-			h = b + 1;
+		{
+			printf(" = [%d]\n", array[pos]);
+		}
+
+		if (array[pos] == value)
+			return ((int)pos);
+
+		if (array[pos] < value)
+			low = pos + 1;
+		else
+			high = pos - 1;
+
+		if (low == high)
+			break;
 	}
 
 	return (-1);
